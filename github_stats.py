@@ -139,26 +139,18 @@ class Queries(object):
           totalCount
         }}
         forkCount
-        languages(first: 10, orderBy: {{field: SIZE, direction: DESC}}) {{
-          edges {{
-            size
-            node {{
-              name
-              color
-            }}
-          }}
-        }}
       }}
     }}
     repositoriesContributedTo(
         first: 100,
-        includeUserRepositories: false,
+        includeUserRepositories: true,
         orderBy: {{
             field: UPDATED_AT,
             direction: DESC
         }},
         contributionTypes: [
             COMMIT,
+            ISSUE,
             PULL_REQUEST,
             REPOSITORY,
             PULL_REQUEST_REVIEW
@@ -168,22 +160,6 @@ class Queries(object):
       pageInfo {{
         hasNextPage
         endCursor
-      }}
-      nodes {{
-        nameWithOwner
-        stargazers {{
-          totalCount
-        }}
-        forkCount
-        languages(first: 10, orderBy: {{field: SIZE, direction: DESC}}) {{
-          edges {{
-            size
-            node {{
-              name
-              color
-            }}
-          }}
-        }}
       }}
     }}
   }}
@@ -341,4 +317,7 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    from time import perf_counter
+    tic = perf_counter()
     asyncio.run(main())
+    print(f'Took {perf_counter()-tic:.2f}s')
