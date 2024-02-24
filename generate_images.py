@@ -27,6 +27,7 @@ async def main() -> None:
     access_token = os.getenv("ACCESS_TOKEN")
     # from dotenv import dotenv_values
     # access_token = dotenv_values('.env')['ACCESS_TOKEN']
+
     if not access_token:
         raise Exception("A personal access token is required to proceed!")
 
